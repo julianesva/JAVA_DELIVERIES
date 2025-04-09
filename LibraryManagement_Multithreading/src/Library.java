@@ -7,14 +7,14 @@ import java.util.List;
 public class Library {  
     private List<Book> books;  
     private List<Patron> patrons;  
-    private HashMap<Patron, Book> checkedOutBooks;  
+    private HashMap<String, Integer> checkedOutBooks;  
   
     public Library() {  
         books = new ArrayList<>();  
         patrons = new ArrayList<>();  
         checkedOutBooks = new HashMap<>();  
     }  
-  
+  /* 
     public void addBook(Book book) {  
         books.add(book);  
     }  
@@ -25,27 +25,39 @@ public class Library {
   
     public void addPatron(Patron patron) {  
         patrons.add(patron);  
-    }  
+    } 
+  */ 
   
-    public boolean checkOutBook(Patron patron, Book book, int daysToDue) {  
-        if (books.contains(book) && !book.isCheckedOut()) {  
-            book.checkOut(daysToDue);  
-            checkedOutBooks.put(patron, book);  
-            return true;  
-        }  
+    public boolean checkOutBook(String bookTitle) {  
+        if(checkedOutBooks.containsKey(bookTitle)){
+            Integer bookQuant = checkedOutBooks.get(bookTitle);  
+            if (bookQuant > 0) {  
+                checkedOutBooks.put(bookTitle, currentCount - 1);
+                return true;
+            }  
+            else{
+                System.out.println("Sorry, we currently do not have that book in storage.");
+            }
+
+        }
+        else{
+            System.out.println("Sorry, that book is not in the library.");
+        }
         return false;  
     }  
   
-    public boolean returnBook(Patron patron) {  
-        Book book = checkedOutBooks.get(patron);  
-        if (book != null) {  
-            book.returnBook();  
-            checkedOutBooks.remove(patron);  
-            return true;  
-        }  
-        return false;  
+    public boolean returnBook(String bookTitle) {  
+        if(checkedOutBooks.containsKey(bookTitle)){
+            Integer bookQuant = checkedOutBooks.get(bookTitle);  
+            checkedOutBooks.put(bookTitle, bookQuant + 1);
+            return true;
+        }
+        else{
+            System.out.println("Sorry, that book is not from our library.");
+            return false;  
+        }
     }  
-  
+  /* 
     public double calculateFine(Patron patron) {  
         Book book = checkedOutBooks.get(patron);  
         if (book != null && book.isCheckedOut()) {  
@@ -71,4 +83,5 @@ public class Library {
     public List<Patron> listPatrons() {  
         return patrons;  
     }  
+  */
 }  
