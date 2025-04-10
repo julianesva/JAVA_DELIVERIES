@@ -43,7 +43,7 @@ public class Library {
                 return true;
             }
             else{
-                System.out.println("Sorry, that book is not from our library.");
+                System.out.println("Sorry, that book that you are tying to return is not from our library.");
             }
         }
         else{
