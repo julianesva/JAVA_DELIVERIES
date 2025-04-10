@@ -1,38 +1,24 @@
-import java.time.LocalDate;  
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;  
 import java.util.HashMap;  
-import java.util.List; 
+import java.util.Map;
   
 public class Library {  
-    private List<Book> books;  
-    private List<Patron> patrons;  
-    private HashMap<String, Integer> checkedOutBooks;  
+    private HashMap<String, Integer> storageBooks;  
   
     public Library() {  
-        books = new ArrayList<>();  
-        patrons = new ArrayList<>();  
-        checkedOutBooks = new HashMap<>();  
+        storageBooks = new HashMap<>(); 
+        storageBooks.put("Book 1", 3);
+        storageBooks.put("Book 2", 3);
+        storageBooks.put("Book 3", 3);
+        storageBooks.put("Book 4", 3);
+        storageBooks.put("Book 5", 3); 
     }  
-  /* 
-    public void addBook(Book book) {  
-        books.add(book);  
-    }  
-  
-    public void removeBook(Book book) {  
-        books.remove(book);  
-    }  
-  
-    public void addPatron(Patron patron) {  
-        patrons.add(patron);  
-    } 
-  */ 
   
     public boolean checkOutBook(String bookTitle) {  
-        if(checkedOutBooks.containsKey(bookTitle)){
-            Integer bookQuant = checkedOutBooks.get(bookTitle);  
+        if(storageBooks.containsKey(bookTitle)){
+            Integer bookQuant = storageBooks.get(bookTitle);  
             if (bookQuant > 0) {  
-                checkedOutBooks.put(bookTitle, currentCount - 1);
+                storageBooks.put(bookTitle, bookQuant - 1);
+                System.out.println("Ckecking Out: " + bookTitle + " Reamining Books: " + (bookQuant - 1));
                 return true;
             }  
             else{
@@ -45,43 +31,34 @@ public class Library {
         }
         return false;  
     }  
+
+    
   
     public boolean returnBook(String bookTitle) {  
-        if(checkedOutBooks.containsKey(bookTitle)){
-            Integer bookQuant = checkedOutBooks.get(bookTitle);  
-            checkedOutBooks.put(bookTitle, bookQuant + 1);
-            return true;
+        if(storageBooks.containsKey(bookTitle)){
+            Integer bookQuant = storageBooks.get(bookTitle);  
+            if (bookQuant < 3) { 
+                storageBooks.put(bookTitle, bookQuant + 1);
+                System.out.println("Returning: " + bookTitle + " Reamining Books: " + (bookQuant + 1));
+                return true;
+            }
+            else{
+                System.out.println("Sorry, that book is not from our library.");
+            }
         }
         else{
-            System.out.println("Sorry, that book is not from our library.");
-            return false;  
+            System.out.println("Sorry, that book is not from our library.");  
         }
-    }  
-  /* 
-    public double calculateFine(Patron patron) {  
-        Book book = checkedOutBooks.get(patron);  
-        if (book != null && book.isCheckedOut()) {  
-            LocalDate today = LocalDate.now();  
-            long daysOverdue = ChronoUnit.DAYS.between(book.getDueDate(), today);  
-            if (daysOverdue > 0) {  
-                return daysOverdue * 0.50; // $0.50 fine per day overdue  
-            }  
-        }  
-        return 0.0;  
-    }  
-  
-    public List<Book> listAvailableBooks() {  
-        List<Book> availableBooks = new ArrayList<>();  
-        for (Book book : books) {  
-            if (!book.isCheckedOut()) {  
-                availableBooks.add(book);  
-            }  
-        }  
-        return availableBooks;  
-    }  
-  
-    public List<Patron> listPatrons() {  
-        return patrons;  
-    }  
-  */
+        return false;
+    } 
+    
+    // Method to print the HashMap that stores the inventory.
+    public void printBooksInventory() {
+        System.out.println("Final Library Inventory:");
+        for (Map.Entry<String, Integer> entry : storageBooks.entrySet()) {
+            String bookName = entry.getKey();
+            int quantity = entry.getValue();
+            System.out.println(bookName + ": " + quantity);
+        }
+    }
 }  
