@@ -2,6 +2,7 @@ package main;
 import java.util.List;
 import java.util.ArrayList;
 
+//Class to make declarations or make the interface that we are going to use along our library. 
 public interface BookManager {
 
     List<Book> Books = new ArrayList<>();

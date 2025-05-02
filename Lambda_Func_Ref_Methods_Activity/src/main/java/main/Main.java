@@ -5,32 +5,36 @@ import java.util.Scanner;
 
 public class Main {
 
+    // Static instances for library logic and user input
     private static Library library = new Library();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Initialize the library with some books
+        // Populate the library with some initial books
         initializeLibrary();
         
         boolean running = true;
+
+        // Main application loop to display menu and process user input
         while (running) {
             displayMenu();
             int choice = getUserChoice();
             
             switch (choice) {
                 case 1:
-                    addNewBook();
+                    addNewBook(); // Option to add a new book
                     break;
                 case 2:
-                    displayfilterOptions();
+                    displayfilterOptions(); // Option to filter/search for books
                     break;
                 case 3:
-                    displaySortOptions();
+                    displaySortOptions(); // Option to sort books
                     break;
                 case 4:
-                    displayAvailableBooks();
+                    displayAvailableBooks(); // Option to list all available books
                     break;
                 case 5:
+                    // Exit the application
                     System.out.println("Thank you for using the Library Management System. Goodbye!");
                     running = false;
                     break;
@@ -39,11 +43,11 @@ public class Main {
             }
         }
         
-        scanner.close();
+        scanner.close(); // Close scanner resource at the end
     }
     
     private static void initializeLibrary() {
-        // Add some initial books to the library
+        // Add some default books to the library at the start of the program
         Book book1 = new Book("Power laws", "Frank Sinatra", "2010");
         Book book2 = new Book("Atomic Habits", "James Bond", "2008");
         Book book3 = new Book("Gold rule of businesses", "Robert Grill", "2016");
@@ -56,6 +60,7 @@ public class Main {
     }
     
     private static void displayMenu() {
+        // Print the main menu options
         System.out.println("\n========== LIBRARY MANAGEMENT SYSTEM ==========");
         System.out.println("1. Add a new book");
         System.out.println("2. Find books");
@@ -66,14 +71,16 @@ public class Main {
     }
     
     private static int getUserChoice() {
+        // Attempt to parse the user's menu input as an integer
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
-            return -1; // Invalid input
+            return -1; // Return -1 if input is not a valid number
         }
     }
     
     private static void addNewBook() {
+        // Collect book details from user and add the new book to the library
         System.out.println("\n========== ADD NEW BOOK ==========");
         
         System.out.print("Enter book title: ");
@@ -91,9 +98,9 @@ public class Main {
         System.out.println("Book added successfully!");
         System.out.println("New book details: " + newBook);
     }
-    
 
     private static void displayfilterOptions() {
+        // Show filtering options for searching books
         System.out.println("\n========== Find Books ==========");
         System.out.println("1. Find books by author");
         System.out.println("2. Find books published before a specific year");
@@ -104,19 +111,20 @@ public class Main {
         
         switch (sortChoice) {
             case 1:
-                findBooksByAuthor();
+                findBooksByAuthor(); // Search books by author
                 break;
             case 2:
-                findBooksPublishBeforeSpecYear();
+                findBooksPublishBeforeSpecYear(); // Search books published before a year
                 break;
             case 3:
-                return;
+                return; // Go back to main menu
             default:
                 System.out.println("Invalid option. Returning to main menu.");
         }
     }
 
     private static void findBooksByAuthor() {
+        // Prompt for author name and search matching books
         System.out.println("\n========== FIND BOOKS BY AUTHOR ==========");
         
         System.out.print("Enter author name: ");
@@ -133,6 +141,7 @@ public class Main {
     }
 
     private static void findBooksPublishBeforeSpecYear() {
+        // Prompt for a year and find books published before it
         System.out.println("\n========== FIND BOOKS PUBLISHED BEFORE A SPECIFIC YEAR ==========");
         
         System.out.print("Year: ");
@@ -149,6 +158,7 @@ public class Main {
     }
     
     private static void displaySortOptions() {
+        // Show sorting options for books
         System.out.println("\n========== SORT BOOKS ==========");
         System.out.println("1. Sort by title");
         System.out.println("2. Sort by publication year");
@@ -159,19 +169,20 @@ public class Main {
         
         switch (sortChoice) {
             case 1:
-                displaySortedBooksByTitle();
+                displaySortedBooksByTitle(); // Sort books alphabetically by title
                 break;
             case 2:
-                displaySortedBooksByYear();
+                displaySortedBooksByYear(); // Sort books numerically by year
                 break;
             case 3:
-                return;
+                return; // Go back to main menu
             default:
                 System.out.println("Invalid option. Returning to main menu.");
         }
     }
     
     private static void displaySortedBooksByTitle() {
+        // Display books sorted alphabetically by title
         System.out.println("\n========== BOOKS SORTED BY TITLE ==========");
         List<Book> sortedBooks = library.sortBooksByTitle();
         
@@ -184,6 +195,7 @@ public class Main {
     }
     
     private static void displaySortedBooksByYear() {
+        // Display books sorted by publication year (ascending)
         System.out.println("\n========== BOOKS SORTED BY YEAR ==========");
         List<Book> sortedBooks = library.sortBooksByYear();
         
@@ -196,6 +208,7 @@ public class Main {
     }
 
     private static void displayAvailableBooks(){
+        // Display all books currently in the library
         System.out.println("\n========== AVAILABLE BOOKS IN THE LIBRARY ==========");
         List<Book> availableBooks = library.getBooks();
         

@@ -1,5 +1,7 @@
 package main;
 
+
+//Class to practice inheritance in java. 
 public class Ebook extends Book {
 
     private int fileSizeKB;
